@@ -30,13 +30,16 @@ extern probe_module_t module_udp6;
 extern probe_module_t module_tcp6_syn;
 extern probe_module_t module_icmp6_echo_tmxd;
 extern probe_module_t module_icmp6_echo_gw;
+extern probe_module_t module_icmp6_echo_full;
 // ADD YOUR MODULE HERE
 
 probe_module_t *probe_modules[] = {
     &module_udp,           &module_tcp_syn,         &module_icmp_echo,
 
     &module_udp6,          &module_tcp6_syn,        &module_icmp6_echo,
-    &module_icmp6_echo_gw, &module_icmp6_echo_tmxd,
+    &module_icmp6_echo_gw, &module_icmp6_echo_tmxd, 
+    
+    &module_icmp6_echo_full,
     // ADD YOUR MODULE HERE
 };
 

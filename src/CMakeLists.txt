@@ -47,6 +47,7 @@ set(SOURCES_PROBE_MODULES
         probe_modules/module_icmp_echo.c
         probe_modules/module_icmp6_echo.c
         probe_modules/module_icmp6_echo_gw.c
+        probe_modules/module_icmp6_echo_full.c
         probe_modules/module_icmp6_echo_tmxd.c
         probe_modules/module_tcp_syn.c
         probe_modules/module_tcp6_syn.c
