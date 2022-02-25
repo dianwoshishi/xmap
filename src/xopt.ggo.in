@@ -28,6 +28,14 @@ option "whitelist-file"         w "File of subnets to include, in CIDR notation,
 option "list-of-ips-file"		I "List of individual addresses to scan in random order, e.g., 2001:db8::1, 192.168.0.1"
     typestr="path"
     optional string
+option "msgq-id"                Q "message IN Queue ID"
+    typestr="num"
+    default="13"
+    optional int        
+option "output-msgq-id"         P "message OUT Queue ID"
+    typestr="num"
+    default="17"
+    optional int    
 
 section "Scan options"
 option "rate"                   R "Set send rate in pkts/sec"

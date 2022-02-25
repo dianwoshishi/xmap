@@ -137,6 +137,8 @@ struct state_conf {
     char *   blocklist_filename;
     char *   allowlist_filename;
     char *   list_of_ips_filename;
+    int   msgq_id;
+    int output_msgq_id;
     uint64_t list_of_ip_count;
     uint64_t list_of_ip_port_count;
     char *   metadata_filename;

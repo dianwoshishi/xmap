@@ -20,6 +20,7 @@
 
 #include "get_gateway.h"
 #include "ip_target_file.h"
+#include "ip_target_msgq.h"
 #include "monitor.h"
 #include "recv.h"
 #include "send.h"
@@ -1012,6 +1013,7 @@ int main(int argc, char *argv[]) {
     // filename
     SET_IF_GIVEN(xconf.output_filename, output_file);
     SET_IF_GIVEN(xconf.list_of_ips_filename, list_of_ips_file);
+    SET_IF_GIVEN(xconf.msgq_id, msgq_id);
     if (xconf.list_of_ips_filename) {
         log_debug("xmap", "init ip target file ing...");
 
@@ -1021,6 +1023,30 @@ int main(int argc, char *argv[]) {
             log_warn("xmap", "zero ip target file, no need to xmap");
             return EXIT_SUCCESS;
         }
+        xconf.list_of_ip_count = count;
+
+        if (xconf.target_port_num)
+            xconf.list_of_ip_port_count = count * xconf.target_port_num;
+        else
+            xconf.list_of_ip_port_count = count;
+
+        log_debug("xmap", "target ipv%d number: %d, <ipv%d, port> number: %d",
+                  xconf.ipv46_flag, count, xconf.ipv46_flag,
+                  xconf.list_of_ip_port_count);
+        log_debug("xmap", "init ip target file completed");
+
+        xconf.max_probe_len      = xconf.ipv46_bits;
+        xconf.max_probe_port_len = xconf.max_probe_len + xconf.target_port_bits;
+        log_debug("xmap", "load ip target from file, max probe len reset to %d",
+                  xconf.max_probe_len);
+    }
+    if(xconf.msgq_id){
+        log_debug("xmap", "init ip target msg queue ing...");
+
+        int count = ip_target_msgq_init(xconf.msgq_id);
+
+        if (count == -1) log_fatal("xmap", "init ip target file error");
+        count = 100;
         xconf.list_of_ip_count = count;
 
         if (xconf.target_port_num)

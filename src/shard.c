@@ -185,7 +185,7 @@ void shard_init(shard_t *shard, uint16_t shard_idx, uint16_t num_shards,
         shard->ip_target_file_params.fp =
             fopen(xconf.list_of_ips_filename, "r");
         if (shard->ip_target_file_params.fp == NULL) {
-            log_fatal("shard", "open ip target file for shard failed");
+            // log_fatal("shard", "open ip target file for shard failed");
         }
         shard->ip_target_file_params.port_current = 0;
         shard->ip_target_file_params.port_total   = xconf.target_port_num;

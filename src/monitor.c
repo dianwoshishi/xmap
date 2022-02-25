@@ -499,7 +499,8 @@ void monitor_run(iterator_t *it, pthread_mutex_t *lock) {
             unlock_file(stderr);
         }
         if (status_fd) {
-            update_status_updates_file(export_status, status_fd);
+            //FIXME comment below, because thd FILE* status_fd change with unknown reason!! 
+            // update_status_updates_file(export_status, status_fd);
         }
         sleep(UPDATE_INTERVAL);
     }

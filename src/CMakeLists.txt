@@ -21,6 +21,7 @@ set(EXTRA_SOURCES_IID_MODULES
 set(SOURCES_OUTPUT_MODULES
         output_modules/output_modules.c
         output_modules/module_csv.c
+        output_modules/module_msgq.c
         )
 
 # Handle optional output modules
@@ -74,6 +75,7 @@ set(SOURCES
         get_gateway.c
         iterator.c
         ip_target_file.c
+        ip_target_msgq.c
         monitor.c
         recv.c
         send.c

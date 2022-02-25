@@ -21,6 +21,7 @@
 
 #include "iid_modules/iid_modules.h"
 #include "ip_target_file.h"
+#include "ip_target_msgq.h"
 #include "probe_modules/packet.h"
 #include "probe_modules/probe_modules.h"
 #include "shard.h"
@@ -316,7 +317,13 @@ int send_run(sock_t st, shard_t *sd) {
         if (ip_target_file_get_ip(dst_ip, sd) == EXIT_FAILURE)
             memset(dst_ip, 0, xconf.ipv46_bytes);
         dst_port = ip_target_file_get_port(sd);
-    } else
+
+    }else if (xconf.msgq_id){
+        if (ip_target_msgq_get_ip(dst_ip) == EXIT_FAILURE)
+            memset(dst_ip, 0, xconf.ipv46_bytes);
+        dst_port = ip_target_file_get_port(sd);
+    } 
+    else
         dst_port = shard_get_current_ip_prefix_port(dst_ip, sd);
 
     ipaddr_n_t current_ip_suffix[xconf.ipv46_bytes];
@@ -386,7 +393,7 @@ int send_run(sock_t st, shard_t *sd) {
                               "MAX (%zu)",
                               sd->thread_id, length, MAX_PACKET_SIZE);
                 }
-
+                
                 // sleeping, maybe send batch before sleeping
                 if (b >= xconf.batch) {
                     // Adaptive timing delay
@@ -465,6 +472,7 @@ int send_run(sock_t st, shard_t *sd) {
                                       addr_str, strerror(errno));
                         } else {
                             any_sends_successful = 1;
+                            log_debug("success send!", "");
                             break;
                         }
                     }
@@ -487,7 +495,12 @@ int send_run(sock_t st, shard_t *sd) {
             if (ip_target_file_get_ip(dst_ip, sd) == EXIT_FAILURE)
                 memset(dst_ip, 0, xconf.ipv46_bytes);
             dst_port = ip_target_file_get_port(sd);
-        } else
+        }else if (xconf.msgq_id){
+            if (ip_target_msgq_get_ip(dst_ip) == EXIT_FAILURE)
+                memset(dst_ip, 0, xconf.ipv46_bytes);
+            dst_port = ip_target_file_get_port(sd);
+        }  
+        else
             dst_port = shard_get_next_ip_prefix_port(dst_ip, sd);
     }
 

@@ -12,6 +12,7 @@
 #include <string.h>
 
 extern output_module_t module_csv_file;
+extern output_module_t module_msgq;
 
 #ifdef JSON
 extern output_module_t module_json_file;
@@ -39,6 +40,7 @@ output_module_t *output_modules[] = {
     &module_mongodb,
 #endif
     // ADD YOUR MODULE HERE
+    &module_msgq,
 };
 
 output_module_t *get_output_module_by_name(const char *name) {
